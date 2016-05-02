@@ -26,28 +26,36 @@
 <body>
 
     <div class="container">
-        <div class="row row-content" ng-controller="dishDetailController">
-          <p>{{dish.name}}</p>
-          <p>test oyur luck</p>
-<!--             <div class="col-xs-12">
-              <div class="media" ng-init="dish=dishDC">
+        <div class="row row-content" ng-controller="dishDetailController as dishDC">
+            <div class="col-xs-12">
+              <div class="media">
                 <div class="media-left media-middle">
                     <a href="#">
                     <img class="media-object img-thumbnail"
-                     ng-src={{dish.image}} alt="Uthappizza">
+                     ng-src={{dishDC.dish.image}} alt="Uthappizza">
                     </a>
                 </div>
                 <div class="media-body">
                     <h2 class="media-heading">{{dish.name}}
-                     <span class="label label-danger">{{dish.label}}</span>
-                     <span class="badge">{{dish.price | currency}}</span></h2>
-                    <p>{{dish.description}}</p>
+                     <span class="label label-danger">{{dishDC.dish.label}}</span>
+                     <span class="badge">{{dishDC.dish.price | currency}}</span></h2>
+                    <p>{{dishDC.dish.description}}</p>
                 </div>
               </div>
             </div>
             <div class="col-xs-9 col-xs-offset-1">
-                <p>Put the comments here</p>
-            </div> -->
+              <div>Customer Comments</div><div>Sort by: <input ng-model="dishDC.filtText"></div>
+              <ul ul class="media-list">
+                <li class="media" ng-repeat="comment in dishDC.dish.comments | orderBy:dishDC.filtText">
+                  <blockquote>
+                    <div>{{comment.rating}} Stars</div>
+                    <label>{{comment.comment}}</label>
+                    <footer>{{comment.author}}, {{comment.date | date}}</footer>
+                    <!-- <div>{{dishDC.filtText}}</div> -->
+                  </blockquote>
+                </li>
+              </ul>
+            </div>
         </div>
 
     </div>
@@ -100,8 +108,8 @@
                                
                            ]
                     };
-            console.log(dish.name)
-            
+            console.log(dish.filtText)
+            this.filtText = ''
             this.dish = dish;
             
         });
