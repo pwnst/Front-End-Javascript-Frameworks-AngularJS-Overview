@@ -7,8 +7,10 @@ angular.module('confusionApp')
             $scope.tab = 1;
             $scope.filtText = '';
             $scope.showDetails = false;
+            $scope.showMenu = true;
+            $scope.message = "Loading ...";
 
-            $scope.dishes= menuFactory.getDishes();
+            $scope.dishes = menuFactory.getDishes().query();
 
                         
             $scope.select = function(setTab) {
@@ -70,9 +72,9 @@ angular.module('confusionApp')
 
         .controller('DishDetailController', ['$scope', '$stateParams', 'menuFactory', function($scope, $stateParams, menuFactory) {
 
-            var dish= menuFactory.getDish(parseInt($stateParams.id,10));
-            
-            $scope.dish = dish;
+            $scope.showDish = true;
+            $scope.message="Loading ...";
+            $scope.dish = menuFactory.getDishes().get({id:parseInt($stateParams.id,10)});
             
         }])
 
@@ -94,7 +96,9 @@ angular.module('confusionApp')
         }])
 
         .controller('IndexController', ['$scope', 'menuFactory', 'corporateFactory', function($scope, menuFactory, corporateFactory) {
-            $scope.dish = menuFactory.getDish(0);
+            $scope.showDish = true;
+            $scope.message="Loading ...";
+            $scope.dish = menuFactory.getDishes().get({id:0});
 
             $scope.promotion = menuFactory.getPromotion(0);
 
